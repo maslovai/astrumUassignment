@@ -3,8 +3,10 @@ class Header extends React.Component{
     
     render(){
         return(
-            <header className = "subRoot">
-                <h1>Veiw Repos</h1>
+            <header className = "header">
+                <div className="logo">Logo</div>
+                <div className="headerTitle">Repositories</div>
+                <div>Iryna Maslova<div className="irynaIM">IM</div></div>
             </header>
         )
     }
