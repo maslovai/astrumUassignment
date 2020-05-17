@@ -1,0 +1,50 @@
+.reposContainer{
+    width:30%;
+    height:50em;
+    background-color: grey;
+    display:flex;
+    flex-direction: column;
+    align-items: center; 
+    overflow-y:scroll; 
+    
+}
+.authorInfo{
+    width: 90%;
+    line-height: 1.3em;
+    padding: 1em;
+    height: 3em;
+}
+.reposList{
+    height: 50em;
+    overflow-y: scroll;
+} 
+.oneItemRepos{
+    position:relative;
+    width:80%;
+    height: 4em;
+    background-color: white;
+    border:solid 1px black;
+    border-radius:3%;
+    margin:1em;
+    padding:1em;
+}
+.repoTitle{
+    display:flex;
+    justify-content: space-between;
+    font-weight:bold;
+}
+.repoTitle::first-line{
+    font-weight: bold;
+}
+.fa-star{
+    padding-left:1em;
+}
+.buttonDiv{
+    border:solid 1px black;
+    border-radius:3%;
+    margin-bottom:2em;
+    margin-top:1em;
+    width:20em;
+    height:5em;
+    text-align: center;
+}

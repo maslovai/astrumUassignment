@@ -1,16 +1,18 @@
 import superagent from'superagent';
 let API = `https://api.github.com/users/gaearon/repos?page=2&per_page=5`;
 
-export const reposInitialize = () => dispatch => {
-    console.log("in action initialize!!! ")
+export const reposInitialize = (api) => dispatch => {
+    console.log("in init actions:   ")
     superagent
-        .get(API)
-        .then(res =>{
-            let list = res.body
-            // console.log("in action initialize: ", res.body)
-            dispatch(initAction(list))
-        })
-        .catch(err => console.log(err));
+    .get(api)
+    .then(res =>{
+        // let parsed = parse(res.links)
+        console.log("Ira look for header here:  ", res)
+        let list=[]
+        res.body.map(obj=>list.push({name:obj.name, description:obj.description, count:obj.stargazers_count}))
+        console.log("in reposList initialize: ", list)
+    })
+    .catch(err => console.log(err));
 }
 export const addMoreRepos = () => {
     superagent

@@ -1,25 +1,40 @@
 import React from 'react';
-import Repos from './reposList'
-import Issues from './issuesList'
-// import * as reposActions from '../app/actions';
-// import {connect} from 'react-redux';
+import Repos from './reposList';
+import Issues from './issuesList';
+import Header from './header';
+import Footer from './footer';
+import superagent from'superagent';
 
-// import superagent from'superagent';
-// let API = `https://api.github.com/users/gaearon/repos?page=2&per_page=5`;
+const API="https://api.github.com/users/gaearon"
 
 class Body extends React.Component{
     constructor(props){
         super(props);
         this.state= {
+            author:{},
             activeRepo:''
         }
         this.getName = this.getName.bind(this)
     }
     getName(name){
-        console.log('got the name! ', name)
-        this.setState({ activeRepo: name }, () => {
-            console.log(this.state.activeRepo);
-          }); 
+        this.setState({ activeRepo: name })
+    }
+
+    UNSAFE_componentWillMount(){
+        superagent
+        .get(API)
+        .then(res =>{
+            let author={
+                name:res.body.name,
+                login:res.body.login,
+                email:"dan.abramov@me.com",
+                repos:res.body.public_repos
+            }
+            this.setState({
+                author:{...this.state.author,...author}
+            })
+        })
+        .catch(err=>console.log(err))
     }
     shouldComponentUpdate(newState,oldState){
         if (newState.activeRepo!==oldState.activeRepo) return true;
@@ -27,18 +42,19 @@ class Body extends React.Component{
 
     render(){
         return(
-            <div className="wrapper">
-                <Repos getName={this.getName} API='https://api.github.com/users/gaearon/repos?page=1&per_page=5&state=all'/>
-                <Issues repoName={this.state.activeRepo}/>
+            <div>
+                <Header repoName={this.state.activeRepo}/>
+                <div className="wrapper">
+                    <Repos author={this.state.author}getName={this.getName} API='https://api.github.com/users/gaearon/repos?page=1&per_page=5&state=all'/>
+                    <Issues repoName={this.state.activeRepo}/>
+                </div>
+                <Footer/>
             </div> 
         )
     }
 
 }
-export default Body;
-
-
-
+export default Body
 
 
 
