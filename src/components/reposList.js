@@ -1,9 +1,7 @@
 import React from 'react';
 import Repo from './repo';
-import parse from 'parse-link-header';
+// import parse from 'parse-link-header';
 import superagent from'superagent';
-// import * as reposActions from '../app/actions';
-// import {connect} from 'react-redux';
 
 class Repos extends React.PureComponent{
     constructor(props){
@@ -22,10 +20,9 @@ class Repos extends React.PureComponent{
         superagent
         .get(this.state.currAPI)
         .then(res =>{
-            // let parsed = parse(res.links)
             console.log("Ira look for header here:  ", res)
             let list=[]
-            res.body.map(obj=>list.push({name:obj.name.toUpperCase(), description:obj.description, count:obj.stargazers_count}))
+            res.body.map(obj=>list.push({name:obj.name, description:obj.description, count:obj.stargazers_count}))
             console.log("in reposList initialize: ", list)
             this.setState({
                 repos:list,
@@ -36,32 +33,30 @@ class Repos extends React.PureComponent{
     }
     handleMore(e){
         e.preventDefault();
-        this.setState({  
-            currPage:this.state.currPage++, 
-            nextPage: this.state.nextPage++,
-            prevPage:this.state.prevPage++
-        }, () => {
-                superagent
-                .get(this.state.nextAPI)
-                .then(res =>{
-                    let list=[]
-                    res.body.map(obj=>list.push({name:obj.name.toUpperCase(), description:obj.description, count:obj.stargazers_count}))
-                    console.log("in reposList on click: ", list)
-                    this.setState({
-                        repos:[...this.state.repos,...list],
-                        nextAPI:res.links.next
-                    })
+        superagent
+        .get(this.state.nextAPI)
+        .then(res =>{
+            let list=[]
+            res.body.map(obj=>list.push({name:obj.name, description:obj.description, count:obj.stargazers_count}))
+            console.log("in reposList on click: ", list)
+            this.setState({
+                repos:[...this.state.repos,...list],
+                nextAPI:res.links.next
             })
-            .catch(err => console.log(err))
-          }); 
+        .catch(err => console.log(err))
+        }); 
     }
     showIssues(name){
-        console.log(name)
         this.props.getName(name)
     }
     render(){
         return(
         <div className="reposContainer">
+            <div className="authorInfo">
+                <div>{this.props.author.name} (@{this.props.author.login})</div>
+                <div><i class="far fa-envelope"></i> {this.props.author.email}</div>
+                <div><i class="fas fa-th-list"></i> {this.props.author.repos} repositories</div>
+            </div>
             <div className="reposList">  
                 {this.state.repos.map((repo, i)=>
                 <Repo key = {i} repo={repo} handleIssues={this.showIssues}/>)}

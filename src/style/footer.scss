@@ -1,0 +1,22 @@
+.footer{
+    width: 100%;
+    height: 3em;
+    display: flex;
+    background-color: rgb(39, 38, 38);
+    color:#FFF;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.footer a{
+    text-decoration: none;
+    color:#FFF;
+}
+.footerFirst{
+    align-self: flex-start;
+    padding:0.75em;
+}
+.footerAstrum{
+    margin:auto;
+    font-size:2em;
+    font-weight: bold;
+    align-self: center;
+}

@@ -31,7 +31,7 @@ class Issues extends React.Component{
             .then(res => {
             console.log("issues in compDidUpdate: ", res.body)
             let issuesList=[]
-            res.body.map(obj=>issuesList.push({title:obj.title.toUpperCase(), description:obj.body}))
+            res.body.map(obj=>issuesList.push({title:obj.title, description:obj.body}))
             if (issuesList.length===0) issuesList.push({title:`No open issues for ${this.state.repoName}`})
             this.setState({issues:issuesList})
         })

@@ -1,6 +1,5 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome'
-// import faStyles from 'font-awesome/css/font-awesome.css'
 
 class Issue extends React.Component{
     constructor(props){

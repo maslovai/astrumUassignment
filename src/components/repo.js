@@ -30,7 +30,6 @@ class Repo extends React.Component{
                     <div className="repoTitle"
                         name={this.props.repo.name}>
                             {this.props.repo.name}
-                            
                             <span>{this.props.repo.count}<i className="fas fa-star"></i></span>
                     </div>
                     <div >{this.props.repo.description}</div>
