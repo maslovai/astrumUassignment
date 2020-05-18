@@ -4,6 +4,7 @@
   "description": "repo view",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js"
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack-dev-server --inline --hot --public"
   },
