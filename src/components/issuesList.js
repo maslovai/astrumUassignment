@@ -1,6 +1,6 @@
 import React from 'react';
 import Issue from './issue'
-// import * as actions from '../app/actions';
+// import * as reposActions from '../app/actions';
 // import {connect} from 'react-redux';
 const API = `${'https://api.github.com/repos/gaearon/'}`
 
@@ -28,9 +28,8 @@ class Issues extends React.Component{
           superagent
             .get(`${API}${this.props.repoName}/issues?page=1&per_page=10&state=all`)
             .then(res => {
-            console.log("issues in compDidUpdate: ", res.body)
             let issuesList=[]
-            res.body.map(obj=>issuesList.push({title:obj.title, description:obj.body}))
+            res.body.map(obj=>issuesList.push({title:obj.title.toUpperCase(), description:obj.body}))
             if (issuesList.length===0) issuesList.push({title:`No open issues for ${this.state.repoName}`})
             this.setState({issues:issuesList})
         })

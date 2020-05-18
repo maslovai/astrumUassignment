@@ -1,5 +1,7 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome'
+// import {connect} from 'react-redux';
+// import * as action from '../app/actions'
 
 class Issue extends React.Component{
     constructor(props){

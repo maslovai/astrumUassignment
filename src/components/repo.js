@@ -1,20 +1,13 @@
 import React from 'react';
+// import {connect} from 'react-redux';
+// import * as action from '../app/actions'
 
 class Repo extends React.Component{
     constructor(props){
         super(props)
-        this.state = {
-            isHovered:false
-        }
-        this.toggleHovered = this.toggleHovered.bind(this)
         this.showIssues = this.showIssues.bind(this)    
     }
     
-    
-    toggleHovered(){
-        this.setState({isHovered:!isHovered})
-        console.log(this.state)
-    }
     showIssues(){
         this.props.handleIssues(this.props.repo.name)
     }
@@ -23,9 +16,6 @@ class Repo extends React.Component{
         return(
         <div onClick={this.showIssues} 
             className="oneItemRepos"
-            // onMouseEnter={this.toggleHovered} 
-            // onMouseLeave = {this.toggleHovered}
-            // className = {this.state.isHovered ? "isHovered" : "notHovered"}
             >
                     <div className="repoTitle"
                         name={this.props.repo.name}>

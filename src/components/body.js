@@ -28,7 +28,6 @@ class Body extends React.Component{
     }
 
     render(){
-        console.log("in body, state:::", this.state.prps)
         return(
             <div>
                 <Header repoName={this.state.activeRepo}/>
@@ -43,12 +42,12 @@ class Body extends React.Component{
 
 }
 
-const mapStateToProps = (state) =>  {console.log("in map state to props, body: ", state)
-return({
+const mapStateToProps = (state) =>  
+({
     activeRepo: state.activeRepo,
     author: state.author
   })
-}
+
       
   const mapDispatchToProps = (dispatch, getState) => ({
       getRepoAuthor: api => dispatch(action.getRepoAuthor(api)),

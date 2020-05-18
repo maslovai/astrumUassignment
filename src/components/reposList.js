@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Repo from './repo';
 import * as action from '../app/actions'
+import Repo from './repo';
 
 class Repos extends React.Component{
     constructor(props){

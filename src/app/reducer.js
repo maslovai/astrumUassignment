@@ -13,6 +13,9 @@ export default (state=initialState, action) => {
 
         case 'GET_AUTHOR':
             return {...state, author:payload}
+        
+        case 'GET_ISSUES':
+            return {...state, issues:payload}
             
         default: return state;
     }
