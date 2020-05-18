@@ -1,4 +1,4 @@
-let initialState = []
+let initialState = {repos:[]}
 
 export default (state=initialState, action) => {
 
@@ -7,11 +7,15 @@ export default (state=initialState, action) => {
     switch(type) {
         case 'INIT':
             console.log("in reducer ", payload)
-        return payload || initialState;
+            return{...state, repos:state.repos.concat(payload.list),nextAPI:payload.nextAPI}
         
         case 'ADD_MORE':
-            return [... state, payload];
-        
+            return{...state, repos:state.repos.concat(payload.list),nextAPI:payload.nextAPI}
+
+        case 'GET_AUTHOR':
+            console.log("in reducer ", payload)
+            return {...state, author:payload}
+            
         default: return state;
     }
 

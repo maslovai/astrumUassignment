@@ -8,15 +8,17 @@ class Issue extends React.Component{
 
 render(){
     return(
+    <div className = "nonScroll">  
     <div className="oneItemIssues">
         <div className="infoIcon">
             <FontAwesome name = "fa-info-circle" className="fas fa-info-circle"/>
-            </div>
+        </div>
         <div className="issueBody">
             <div className="issueTitle">{this.props.title}</div>
-            <div >{this.props.description}</div>
+            <div className="issueDescription">{this.props.description}</div>
         </div>    
-        <FontAwesome name = "fa-times-circle"className="fas fa-times-circle infoIcon2"/>
+    </div>
+    <FontAwesome name = "fa-times-circle"className="fas fa-times-circle infoIcon2"/>
     </div>
     )
 }

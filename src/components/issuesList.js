@@ -1,6 +1,6 @@
 import React from 'react';
 import Issue from './issue'
-// import * as reposActions from '../app/actions';
+// import * as actions from '../app/actions';
 // import {connect} from 'react-redux';
 const API = `${'https://api.github.com/repos/gaearon/'}`
 
@@ -24,7 +24,7 @@ class Issues extends React.Component{
         else return null;
     }
     componentDidUpdate(prevState) {
-        console.log(`${API}${this.props.repoName}/issues?page=1&per_page=10&state=all`)
+        // console.log(`${API}${this.props.repoName}/issues?page=1&per_page=10&state=all`)
         if (prevState.repoName!== this.state.repoName) {
           superagent
             .get(`${API}${this.props.repoName}/issues?page=1&per_page=10&state=all`)

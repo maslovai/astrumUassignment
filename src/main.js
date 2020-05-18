@@ -16,7 +16,7 @@ class Main extends React.Component{
         return (
             <Provider store={store}>
             <div className="main">
-                <Body />
+                <Body API='https://api.github.com/users/gaearon'/>
             </div>
             </Provider>
         )

@@ -17,17 +17,24 @@
     padding: 0.5em;
     overflow-y: scroll;  
 }
+.issueDescription{
+    
+}
 .oneItemIssues{
     position:relative;
     display:flex;
     justify-content: space-around;
-    width:90%;
     height: 6em;
     overflow-y:scroll;
     background-color: white;
     border:solid 1px black;
     border-radius:3%;
     margin:1em;       
+}
+.nonScroll{
+    position:relative;
+    overflow-y: visible;
+    width:90%;
 }
 .oneItem{
     margin:0.25em;
@@ -64,9 +71,9 @@
 }
 
 .fa-times-circle{
-    font-size:1.5em;
+    font-size:1.6em;
     position: absolute;
-    top: -10;
-    right: 0;
-   
+    top: -0.2em;
+    right: 0.2em;
+    background-color: #FFF;
 }

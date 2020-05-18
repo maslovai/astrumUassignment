@@ -1,15 +1,16 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import Repo from './repo';
 // import parse from 'parse-link-header';
-import superagent from'superagent';
+// import superagent from'superagent';
+import * as action from '../app/actions'
 
-class Repos extends React.PureComponent{
+class Repos extends React.Component{
     constructor(props){
         super(props)
         this.state = {
             repos: this.props.repos || [],
             currAPI: this.props.API,
-            prevPage:'',
             nextAPI:'',
             reposPerPage:5
         }
@@ -17,48 +18,28 @@ class Repos extends React.PureComponent{
         this.showIssues = this.showIssues.bind(this)
     }
     UNSAFE_componentWillMount(){
-        superagent
-        .get(this.state.currAPI)
-        .then(res =>{
-            console.log("Ira look for header here:  ", res)
-            let list=[]
-            res.body.map(obj=>list.push({name:obj.name, description:obj.description, count:obj.stargazers_count}))
-            console.log("in reposList initialize: ", list)
-            this.setState({
-                repos:list,
-                nextAPI:res.links.next
-            })
-        })
-        .catch(err => console.log(err));
+        this.props.reposInitialize(this.state.currAPI)    
     }
+ 
     handleMore(e){
         e.preventDefault();
-        superagent
-        .get(this.state.nextAPI)
-        .then(res =>{
-            let list=[]
-            res.body.map(obj=>list.push({name:obj.name, description:obj.description, count:obj.stargazers_count}))
-            console.log("in reposList on click: ", list)
-            this.setState({
-                repos:[...this.state.repos,...list],
-                nextAPI:res.links.next
-            })
-        .catch(err => console.log(err))
-        }); 
-    }
+        this.props.addMoreRepos(this.props.API)
+        }; 
+    
     showIssues(name){
         this.props.getName(name)
     }
     render(){
+        console.log("in render state:", this.state, 'props: ', this.props)
         return(
         <div className="reposContainer">
-            <div className="authorInfo">
+            {/* <div className="authorInfo">
                 <div>{this.props.author.name} (@{this.props.author.login})</div>
-                <div><i class="far fa-envelope"></i> {this.props.author.email}</div>
-                <div><i class="fas fa-th-list"></i> {this.props.author.repos} repositories</div>
-            </div>
+                <div><i className="far fa-envelope"></i> {this.props.author.email}</div>
+                <div><i className="fas fa-th-list"></i> {this.props.author.repos} repositories</div>
+            </div> */}
             <div className="reposList">  
-                {this.state.repos.map((repo, i)=>
+                {this.props.repos.map((repo, i)=>
                 <Repo key = {i} repo={repo} handleIssues={this.showIssues}/>)}
             </div>
             <a href="#"onClick={this.handleMore}>
@@ -69,4 +50,18 @@ class Repos extends React.PureComponent{
     }
 }
 
-export default Repos
+// export default Repos
+const mapStateToProps = (state) => 
+    ({
+    author:state.author,    
+    repos: state.repos,
+    currentAPI: state.currentAPI,
+    nexAPI: state.nexAPI
+  });
+      
+  const mapDispatchToProps = (dispatch, getState) => ({
+      reposInitialize: api => dispatch(action.reposInitialize(api)),
+      addMoreRepos: api => dispatch(action.addMoreRepos(api))
+  })
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(Repos);

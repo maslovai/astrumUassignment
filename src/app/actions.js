@@ -1,33 +1,61 @@
 import superagent from'superagent';
-let API = `https://api.github.com/users/gaearon/repos?page=2&per_page=5`;
 
-export const reposInitialize = (api) => dispatch => {
-    console.log("in init actions:   ")
+export const reposInitialize = api => dispatch => {
+    console.log("in init actions:   ", api)
     superagent
     .get(api)
     .then(res =>{
-        // let parsed = parse(res.links)
-        console.log("Ira look for header here:  ", res)
         let list=[]
+        let nextAPI = res.links.next
         res.body.map(obj=>list.push({name:obj.name, description:obj.description, count:obj.stargazers_count}))
-        console.log("in reposList initialize: ", list)
+        dispatch(initAction({list, nextAPI}))
     })
     .catch(err => console.log(err));
 }
-export const addMoreRepos = () => {
+export const addMoreRepos = api => dispatch => {
+    console.log("in action addMore:  ", api)
+
     superagent
-        .get(API)
-        .then(res => dispatch(addMore(res.body)));
+        .get(api)
+        .then(res =>{
+            let nextAPI = res.links.next
+            let list=[]
+            res.body.map(obj=>list.push({name:obj.name, description:obj.description, count:obj.stargazers_count}))
+            console.log("in action addMore: ", nextAPI)
+            dispatch(addMore({list, nextAPI}))
+        })
+        .catch(err => console.log(err))
+}
+export const getRepoAuthor = api => dispatch => {
+    superagent
+        .get(api)
+        .then(res => {
+            // console.log("in action get author..........", res)
+            let author = {
+                name:res.body.name,
+                login:res.body.login,
+                email:"dan.abramov@me.com",
+                repos:res.body.public_repos
+            }
+            dispatch(getAuthor(author))
+        })
+        .catch(err=>console.log(err))
+   
 }
 
- const initAction = reposList => ({
+ const initAction = (obj) => ({
     type: 'INIT',
-    payload: reposList
+    payload: obj
  })
 
- const addMore = reposList => {
+ const addMore = (obj) => {
     return {
-        type: "ADD_MORE",
-        payload: reposList
+        type: 'ADD_MORE',
+        payload: obj
     }
 }
+
+const getAuthor = (author) => ({
+    type: 'GET_AUTHOR',
+    payload: author
+ })
