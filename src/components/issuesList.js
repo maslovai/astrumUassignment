@@ -24,7 +24,6 @@ class Issues extends React.Component{
         else return null;
     }
     componentDidUpdate(prevState) {
-        // console.log(`${API}${this.props.repoName}/issues?page=1&per_page=10&state=all`)
         if (prevState.repoName!== this.state.repoName) {
           superagent
             .get(`${API}${this.props.repoName}/issues?page=1&per_page=10&state=all`)

@@ -1,8 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Repo from './repo';
-// import parse from 'parse-link-header';
-// import superagent from'superagent';
 import * as action from '../app/actions'
 
 class Repos extends React.Component{
@@ -23,21 +21,20 @@ class Repos extends React.Component{
  
     handleMore(e){
         e.preventDefault();
-        this.props.addMoreRepos(this.props.API)
+        this.props.addMoreRepos(this.props.nextAPI)
         }; 
     
     showIssues(name){
         this.props.getName(name)
     }
     render(){
-        console.log("in render state:", this.state, 'props: ', this.props)
         return(
         <div className="reposContainer">
-            {/* <div className="authorInfo">
+            { <div className="authorInfo">
                 <div>{this.props.author.name} (@{this.props.author.login})</div>
                 <div><i className="far fa-envelope"></i> {this.props.author.email}</div>
                 <div><i className="fas fa-th-list"></i> {this.props.author.repos} repositories</div>
-            </div> */}
+            </div> }
             <div className="reposList">  
                 {this.props.repos.map((repo, i)=>
                 <Repo key = {i} repo={repo} handleIssues={this.showIssues}/>)}
@@ -50,13 +47,12 @@ class Repos extends React.Component{
     }
 }
 
-// export default Repos
 const mapStateToProps = (state) => 
-    ({
+ ({
     author:state.author,    
     repos: state.repos,
     currentAPI: state.currentAPI,
-    nexAPI: state.nexAPI
+    nextAPI: state.nextAPI
   });
       
   const mapDispatchToProps = (dispatch, getState) => ({

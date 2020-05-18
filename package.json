@@ -2,7 +2,7 @@
   "name": "astrumUassignment",
   "version": "1.0.0",
   "description": "repo view",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack-dev-server --inline --hot --public"

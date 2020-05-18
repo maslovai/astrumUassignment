@@ -1,20 +1,19 @@
 import superagent from'superagent';
 
 export const reposInitialize = api => dispatch => {
-    console.log("in init actions:   ", api)
+    
     superagent
     .get(api)
     .then(res =>{
         let list=[]
         let nextAPI = res.links.next
+        console.log("in init actions:   ", res.links.next, nextAPI)
         res.body.map(obj=>list.push({name:obj.name, description:obj.description, count:obj.stargazers_count}))
         dispatch(initAction({list, nextAPI}))
     })
     .catch(err => console.log(err));
 }
 export const addMoreRepos = api => dispatch => {
-    console.log("in action addMore:  ", api)
-
     superagent
         .get(api)
         .then(res =>{
@@ -30,7 +29,6 @@ export const getRepoAuthor = api => dispatch => {
     superagent
         .get(api)
         .then(res => {
-            // console.log("in action get author..........", res)
             let author = {
                 name:res.body.name,
                 login:res.body.login,
