@@ -9,8 +9,7 @@ class Repos extends React.Component{
         this.state = {
             repos: this.props.repos || [],
             currAPI: this.props.API,
-            nextAPI:'',
-            reposPerPage:5
+            nextAPI:''
         }
         this.handleMore = this.handleMore.bind(this)
         this.showIssues = this.showIssues.bind(this)
@@ -40,7 +39,7 @@ class Repos extends React.Component{
                 <Repo key = {i} repo={repo} handleIssues={this.showIssues}/>)}
             </div>
             <a href="#"onClick={this.handleMore}>
-                <button className="buttonDiv"href="#">Load More</button>
+                <button className="buttonDiv"href="#" >Load More</button>
             </a> 
         </div>   
         )
@@ -48,13 +47,15 @@ class Repos extends React.Component{
 }
 
 const mapStateToProps = (state) => 
- ({
-    author:state.author,    
+{console.log(state)
+ return({
+    author:state.author,
+    issues:state.issues,    
     repos: state.repos,
     currentAPI: state.currentAPI,
     nextAPI: state.nextAPI
   });
-      
+}    
   const mapDispatchToProps = (dispatch, getState) => ({
       reposInitialize: api => dispatch(action.reposInitialize(api)),
       addMoreRepos: api => dispatch(action.addMoreRepos(api))

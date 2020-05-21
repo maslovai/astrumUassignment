@@ -1,14 +1,16 @@
 .issuesInitial{
+    box-sizing: border-box; 
+    -moz-box-align: center;
     width: 40%;
-    height: 15em;
+    height: 10em;
     margin: auto;
     border: solid 1px black;
     background-color: grey;
     text-align: center;
-    text-align: center;
-    padding: 5em 1em 0 1em;
+    vertical-align: middle;
+    padding:1em;
     font-size: 1.5em;
-
+    
 } 
 .issuesContainer{
     width: 65%;
