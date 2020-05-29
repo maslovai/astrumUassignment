@@ -1,14 +1,12 @@
 import React from 'react';
-class Header extends React.Component{
-    
-    render(){
-        return(
-            <header className = "header">
-                <div className="logo">Logo</div>
-                <div className="headerTitle">Repositories</div>
-                <div>Iryna Maslova<div className="irynaIM">IM</div></div>
-            </header>
-        )
-    }
-}
-export default Header
+
+export default function Header(name) {
+    return (
+        <header className = "header">
+        <div className="logo">Logo</div>
+        <div className="headerTitle">
+            {name.repo.length===0 ? "Repositories" : name.repo}</div>
+        <div>Iryna Maslova<div className="irynaIM">IM</div></div>
+    </header>
+    );
+  }

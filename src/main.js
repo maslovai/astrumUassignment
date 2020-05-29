@@ -1,14 +1,13 @@
+import './style/main.scss';
 import React from 'react';
 import ReactDom from 'react-dom';
 import {Provider} from 'react-redux';
-import createStore from '/Users/irynamaslova/Projects/501/astrumU/src/app/store.js';
-import './style/main.scss';
+import createStore from './app/store'
 import Body from './components/body';
-import Header from './components/header';
-import Footer from './components/footer';
+
 const store = createStore();
 
-class App extends React.Component{
+class Main extends React.Component{
     constructor(props){
         super(props)
       
@@ -17,12 +16,10 @@ class App extends React.Component{
         return (
             <Provider store={store}>
             <div className="main">
-                <Header/>
-                <Body />
-                <Footer/>
+                <Body API='https://api.github.com/users/gaearon'/>
             </div>
             </Provider>
         )
     }
 }
-ReactDom.render(<App/>, document.getElementById('root'));
+ReactDom.render(<Main/>, document.getElementById('root'));

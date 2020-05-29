@@ -1,77 +1,66 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import * as action from '../app/actions'
 import Repo from './repo';
-import parse from 'parse-link-header';
-import superagent from'superagent';
-// import * as reposActions from '../app/actions';
-// import {connect} from 'react-redux';
 
-class Repos extends React.PureComponent{
+class Repos extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            repos: this.props.repos || [],
             currAPI: this.props.API,
-            prevPage:'',
             nextAPI:'',
-            reposPerPage:5
+            btnClicked:false
         }
         this.handleMore = this.handleMore.bind(this)
-        this.showIssues = this.showIssues.bind(this)
     }
-    UNSAFE_componentWillMount(){
-        superagent
-        .get(this.state.currAPI)
-        .then(res =>{
-            // let parsed = parse(res.links)
-            console.log("Ira look for header here:  ", res)
-            let list=[]
-            res.body.map(obj=>list.push({name:obj.name.toUpperCase(), description:obj.description, count:obj.stargazers_count}))
-            console.log("in reposList initialize: ", list)
-            this.setState({
-                repos:list,
-                nextAPI:res.links.next
-            })
-        })
-        .catch(err => console.log(err));
+   
+    componentDidUpdate(prevProps, currState){
+       if (prevProps.repos!==this.props.repos) this.setState({btnClicked:false})
     }
     handleMore(e){
         e.preventDefault();
-        this.setState({  
-            currPage:this.state.currPage++, 
-            nextPage: this.state.nextPage++,
-            prevPage:this.state.prevPage++
-        }, () => {
-                superagent
-                .get(this.state.nextAPI)
-                .then(res =>{
-                    let list=[]
-                    res.body.map(obj=>list.push({name:obj.name.toUpperCase(), description:obj.description, count:obj.stargazers_count}))
-                    console.log("in reposList on click: ", list)
-                    this.setState({
-                        repos:[...this.state.repos,...list],
-                        nextAPI:res.links.next
-                    })
-            })
-            .catch(err => console.log(err))
-          }); 
-    }
-    showIssues(name){
-        console.log(name)
-        this.props.getName(name)
-    }
+        this.setState({btnClicked:true})
+        this.props.addMoreRepos(this.props.nextAPI)   
+    }; 
+  
     render(){
         return(
         <div className="reposContainer">
+            { <div className="authorInfo">
+                <div>{this.props.author.name} (@{this.props.author.login})</div>
+                <div><i className="far fa-envelope"></i> {this.props.author.email}</div>
+                <div><i className="fas fa-th-list"></i> {this.props.author.repos} repositories</div>
+            </div> }
             <div className="reposList">  
-                {this.state.repos.map((repo, i)=>
-                <Repo key = {i} repo={repo} handleIssues={this.showIssues}/>)}
+                {this.props.repos.map((repo, i)=>
+                <Repo key = {i} repo={repo} />)}
+
             </div>
             <a href="#"onClick={this.handleMore}>
-                <button className="buttonDiv"href="#">Load More</button>
+                <button
+                className="buttonDiv"
+                disabled={this.state.btnClicked||this.props.nextAPI===undefined}
+                href="#" >
+                    {this.props.nextAPI===undefined?"no more repositories to load"
+                        :this.state.btnClicked?"loading...":"load more"}
+                </button>
             </a> 
         </div>   
         )
     }
 }
 
-export default Repos
+const mapStateToProps = (state) => 
+({
+    author:state.author,
+    issues:state.issues,    
+    repos: state.repos,
+    currentAPI: state.currentAPI,
+    nextAPI: state.nextAPI
+});
+   
+const mapDispatchToProps = (dispatch, getState) => ({
+    addMoreRepos: api => dispatch(action.addMoreRepos(api))
+})
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Repos);

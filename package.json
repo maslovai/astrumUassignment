@@ -2,11 +2,12 @@
   "name": "astrumUassignment",
   "version": "1.0.0",
   "description": "repo view",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "start": "node server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "webpack-dev-server --inline --hot --public"
+    "watch": "webpack-dev-server --inline --hot --public",
+    "start": "node server/server.js"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
     "react-redux": "^7.2.0",
     "react-transition-group": "^1.2.1",
     "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "resolve-url-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
     "superagent": "^5.2.2",
