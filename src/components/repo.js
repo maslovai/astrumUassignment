@@ -1,15 +1,20 @@
 import React from 'react';
-// import {connect} from 'react-redux';
-// import * as action from '../app/actions'
+import {connect} from 'react-redux';
+import * as action from '../app/actions'
 
 class Repo extends React.Component{
     constructor(props){
         super(props)
+        this.state= {
+            activeRepo:'',
+            issues:[]
+        }
         this.showIssues = this.showIssues.bind(this)    
     }
     
     showIssues(){
-        this.props.handleIssues(this.props.repo.name)
+        this.props.loadRepoIssues(this.props.repo.name);
+        this.props.getRepoName(this.props.repo.name)
     }
 
     render(){
@@ -27,4 +32,14 @@ class Repo extends React.Component{
     )
     }
 }
-export default Repo;
+
+const mapStateToProps = (state) => 
+({
+    activeRepo: state.activeRepo,
+    issues: state.issues
+  })
+const mapDispatchToProps = (dispatch, getState) => ({
+      loadRepoIssues : name => dispatch(action.loadRepoIssues(name)),
+      getRepoName : name => dispatch(action.getRepoName(name))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Repo);

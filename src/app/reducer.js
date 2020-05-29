@@ -1,4 +1,4 @@
-let initialState = {repos:[], author:{}, activeRepo:'',issues:[]}
+let initialState = {repos:[], author:{}, activeRepo:'',issues:[],btnClicked:false}
 
 export default (state=initialState, action) => {
         
@@ -8,7 +8,10 @@ export default (state=initialState, action) => {
             return{...state, repos:state.repos.concat(payload.list),nextAPI:payload.nextAPI}
         
         case 'ADD_MORE':
-            return{...state, repos:state.repos.concat(payload.list),nextAPI:payload.nextAPI}
+            return{...state, repos:state.repos.concat(payload.list), 
+                    nextAPI:payload.nextAPI, 
+                    btnClicked:false
+                }
 
         case 'GET_AUTHOR':
             return {...state, author:payload}

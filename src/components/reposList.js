@@ -7,25 +7,22 @@ class Repos extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            repos: this.props.repos || [],
             currAPI: this.props.API,
-            nextAPI:''
+            nextAPI:'',
+            btnClicked:false
         }
         this.handleMore = this.handleMore.bind(this)
-        this.showIssues = this.showIssues.bind(this)
     }
-    UNSAFE_componentWillMount(){
-        this.props.reposInitialize(this.state.currAPI)    
+   
+    componentDidUpdate(prevProps, currState){
+       if (prevProps.repos!==this.props.repos) this.setState({btnClicked:false})
     }
- 
     handleMore(e){
         e.preventDefault();
-        this.props.addMoreRepos(this.props.nextAPI)
-        }; 
-    
-    showIssues(name){
-        this.props.getName(name)
-    }
+        this.setState({btnClicked:true})
+        this.props.addMoreRepos(this.props.nextAPI)   
+    }; 
+  
     render(){
         return(
         <div className="reposContainer">
@@ -36,10 +33,16 @@ class Repos extends React.Component{
             </div> }
             <div className="reposList">  
                 {this.props.repos.map((repo, i)=>
-                <Repo key = {i} repo={repo} handleIssues={this.showIssues}/>)}
+                <Repo key = {i} repo={repo} />)}
+
             </div>
             <a href="#"onClick={this.handleMore}>
-                <button className="buttonDiv"href="#" >Load More</button>
+                <button
+                className="buttonDiv"
+                disabled={this.state.btnClicked}
+                href="#" >
+                    {this.state.btnClicked?"loading...":"load more"}
+                </button>
             </a> 
         </div>   
         )
@@ -47,18 +50,17 @@ class Repos extends React.Component{
 }
 
 const mapStateToProps = (state) => 
-{console.log(state)
- return({
+({
     author:state.author,
     issues:state.issues,    
     repos: state.repos,
+    btnClicked:state.btnClicked,
     currentAPI: state.currentAPI,
     nextAPI: state.nextAPI
-  });
-}    
-  const mapDispatchToProps = (dispatch, getState) => ({
-      reposInitialize: api => dispatch(action.reposInitialize(api)),
-      addMoreRepos: api => dispatch(action.addMoreRepos(api))
-  })
+});
+   
+const mapDispatchToProps = (dispatch, getState) => ({
+    addMoreRepos: api => dispatch(action.addMoreRepos(api))
+})
   
-  export default connect(mapStateToProps, mapDispatchToProps)(Repos);
+export default connect(mapStateToProps, mapDispatchToProps)(Repos);

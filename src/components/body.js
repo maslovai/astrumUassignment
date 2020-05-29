@@ -11,19 +11,15 @@ class Body extends React.PureComponent{
         super(props);
         this.state= {
             author:{},
-            activeRepo:'',
-            API: '',
-            issues:[]
+            API: 'https://api.github.com/users/gaearon/repos?page=1&per_page=5&state=open',
+            repos: this.props.repos || [],
         }
-        this.getName = this.getName.bind(this)
-    }
-    getName(name){
-        this.props.loadRepoIssues(name);
-        this.props.getRepoName(name)
     }
 
-    UNSAFE_componentWillMount(){
+    componentDidMount(){
         this.props.getRepoAuthor('https://api.github.com/users/gaearon');
+        this.props.reposInitialize(this.state.API)    
+
     }
 
     render(){
@@ -31,8 +27,7 @@ class Body extends React.PureComponent{
             <div>
                 <Header repo={this.props.activeRepo}/>
                 <div className="wrapper">
-                    <Repos getName={this.getName} API='https://api.github.com/users/gaearon/repos?page=1&per_page=5&state=open'/>
-                    {/* author={this.props.author} */}
+                    <Repos API='https://api.github.com/users/gaearon/repos?page=1&per_page=5&state=open'/>
                     <Issues issues={this.props.issues}/>
                 </div>
                 <Footer/>
@@ -43,20 +38,18 @@ class Body extends React.PureComponent{
 }
 
 const mapStateToProps = (state) => 
-{
-    console.log("in map, state: ", state) 
-return({
+({
     activeRepo: state.activeRepo,
     author: state.author,
+    repos: state.repos,
     issues: state.issues
-  })
-}
+})
       
-  const mapDispatchToProps = (dispatch, getState) => ({
-      getRepoAuthor: api => dispatch(action.getRepoAuthor(api)),
-      loadRepoIssues : name => dispatch(action.loadRepoIssues(name)),
-      getRepoName : name => dispatch(action.getRepoName(name))
-  })
+const mapDispatchToProps = (dispatch, getState) => ({
+    getRepoAuthor: api => dispatch(action.getRepoAuthor(api)),
+    reposInitialize: api => dispatch(action.reposInitialize(api))
+
+})
   
-  export default connect(mapStateToProps, mapDispatchToProps)(Body);
+export default connect(mapStateToProps, mapDispatchToProps)(Body);
 

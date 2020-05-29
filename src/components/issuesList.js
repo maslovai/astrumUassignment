@@ -2,7 +2,6 @@ import React from 'react';
 import Issue from './issue'
 
 export default function Issues(list) {
-    console.log(list)
     return (
         list.issues.length===0 ?
         <div className = "issuesInitial">
