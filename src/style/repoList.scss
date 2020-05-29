@@ -22,6 +22,7 @@
     position:relative;
     width:80%;
     height: 4em;
+    overflow-y:scroll;
     background-color: white;
     border:solid 1px black;
     border-radius:3%;
@@ -48,3 +49,9 @@
     height:5em;
     text-align: center;
 }
+// .enabled{
+//     background-color: white;;
+// }
+// .disabled{
+//     background-color: red;
+// }
