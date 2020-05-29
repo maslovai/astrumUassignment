@@ -5,6 +5,7 @@ export const reposInitialize = api => dispatch => {
     superagent
     .get(api)
     .then(res =>{
+        // console.log(res.links.next)
         let list=[]
         let nextAPI = res.links.next
         res.body.map(obj=>list.push({name:obj.name, description:obj.description, count:obj.stargazers_count}))

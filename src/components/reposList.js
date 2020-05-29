@@ -39,9 +39,10 @@ class Repos extends React.Component{
             <a href="#"onClick={this.handleMore}>
                 <button
                 className="buttonDiv"
-                disabled={this.state.btnClicked}
+                disabled={this.state.btnClicked||this.props.nextAPI===undefined}
                 href="#" >
-                    {this.state.btnClicked?"loading...":"load more"}
+                    {this.props.nextAPI===undefined?"no more repositories to load"
+                        :this.state.btnClicked?"loading...":"load more"}
                 </button>
             </a> 
         </div>   
@@ -54,7 +55,6 @@ const mapStateToProps = (state) =>
     author:state.author,
     issues:state.issues,    
     repos: state.repos,
-    btnClicked:state.btnClicked,
     currentAPI: state.currentAPI,
     nextAPI: state.nextAPI
 });
