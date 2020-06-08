@@ -7,19 +7,13 @@ import Body from './components/body';
 
 const store = createStore();
 
-class Main extends React.Component{
-    constructor(props){
-        super(props)
-      
-    }
-    render(){
-        return (
-            <Provider store={store}>
-            <div className="main">
-                <Body API='https://api.github.com/users/gaearon'/>
-            </div>
-            </Provider>
-        )
-    }
+function Main(){
+    return (
+        <Provider store={store}>
+        <div className="main">
+            <Body API='https://api.github.com/users/gaearon'/>
+        </div>
+        </Provider>
+    )
 }
 ReactDom.render(<Main/>, document.getElementById('root'));

@@ -5,7 +5,7 @@ export default function Issues(list) {
     return (
         list.issues.length===0 ?
         <div className = "issuesInitial">
-            Click on the repo to view issues.
+            Click on a repo to the left to view it's issues.
             </div> :
         <div className="issuesContainer">
             {list.issues.map((issue, i) =>

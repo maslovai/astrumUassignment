@@ -1,4 +1,4 @@
-let initialState = {repos:[], author:{}, activeRepo:'',issues:[]}
+let initialState = {repos:[], author:{}, activeRepo:'',issues:[], nextAPI:''}
 
 export default (state=initialState, action) => {
         

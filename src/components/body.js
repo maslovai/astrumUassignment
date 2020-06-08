@@ -19,7 +19,6 @@ class Body extends React.PureComponent{
     componentDidMount(){
         this.props.getRepoAuthor('https://api.github.com/users/gaearon');
         this.props.reposInitialize(this.state.API)    
-
     }
 
     render(){
@@ -34,7 +33,6 @@ class Body extends React.PureComponent{
             </div> 
         )
     }
-
 }
 
 const mapStateToProps = (state) => 
@@ -42,13 +40,13 @@ const mapStateToProps = (state) =>
     activeRepo: state.activeRepo,
     author: state.author,
     repos: state.repos,
-    issues: state.issues
+    issues: state.issues, 
+    nextAPI:state.nextAPI
 })
       
 const mapDispatchToProps = (dispatch, getState) => ({
-    getRepoAuthor: api => dispatch(action.getRepoAuthor(api)),
-    reposInitialize: api => dispatch(action.reposInitialize(api))
-
+      getRepoAuthor: api => dispatch(action.getRepoAuthor(api)),
+      reposInitialize: api => dispatch(action.reposInitialize(api))
 })
   
 export default connect(mapStateToProps, mapDispatchToProps)(Body);
