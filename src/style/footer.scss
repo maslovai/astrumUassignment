@@ -2,6 +2,8 @@
     width: 100%;
     height: 3em;
     display: flex;
+    justify-content: space-between;
+    vertical-align: middle;
     background-color: rgb(39, 38, 38);
     color:#FFF;
     font-family: Arial, Helvetica, sans-serif;
@@ -16,8 +18,13 @@
     }
     .footerAstrum{
         margin:auto;
-        font-size:2em;
+        font-size:1.2em;
         font-weight: bold;
-        align-self: center;
+        // align-self: center;
+    }
+
+    .fbIcon{
+        font-size: 2em;
+        padding-right:0.75em;
     }
 }
